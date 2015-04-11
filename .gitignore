@@ -1,6 +1,17 @@
 #ignoring files for intellij project
-#idea folder
-seleniumTest/.idea/*
-seleniumTest/target/*
-.DS_Store
 
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+# Maven
+log/
+target/
