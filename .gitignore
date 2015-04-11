@@ -1,0 +1,6 @@
+#ignoring files for intellij project
+#idea folder
+seleniumTest/.idea/*
+seleniumTest/target/*
+.DS_Store
+
