@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://donatepls.com/" />
+<title>Successful Room Booking</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Successful Room Booking</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/mrbs-1.4.11/web/day.php?year=2015&amp;month=04&amp;day=10&amp;area=1&amp;room=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=datepicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=datepicker</td>
+	<td>04/08/2015</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/mrbs-1.4.11/web/edit_entry.php?area=1&amp;room=2&amp;hour=10&amp;minute=30&amp;year=2015&amp;month=4&amp;day=8</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=name</td>
+	<td>Room to breathe</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=description</td>
+	<td>Some people are registered.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=save_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//a[contains(text(),'Room to breathe')])[2]</td>
+	<td>Room to breathe</td>
+</tr>
+<tr>
+	<td>verifyAttribute</td>
+	<td>xpath=(//a[contains(text(),'Room to breathe')])[2]@title</td>
+	<td>Some people are registered.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'Room to breathe')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Delete Entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure<br />you want to<br />delete this entry?<br /><br /></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
