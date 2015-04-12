@@ -1,4 +1,4 @@
-package TestMeetingRoomBookingSystem;
+package TestMeetingRoomBookingSystem.Rules;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
