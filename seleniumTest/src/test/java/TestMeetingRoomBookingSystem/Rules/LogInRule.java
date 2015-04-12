@@ -8,6 +8,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class LogInRule implements TestRule{
     private final String URL = "http://donatepls.com/mrbs-1.4.11/web/admin.php";
     private final String USERNAME = "rob";
@@ -20,6 +22,7 @@ public class LogInRule implements TestRule{
             @Override
             public void evaluate() throws Throwable {
                 driver = new FirefoxDriver();
+                driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
                 driver.navigate().to(URL);
                 driver.findElement(By.id("NewUserName")).sendKeys(USERNAME);
                 driver.findElement(By.id("NewUserPassword")).sendKeys(PASSWORD);

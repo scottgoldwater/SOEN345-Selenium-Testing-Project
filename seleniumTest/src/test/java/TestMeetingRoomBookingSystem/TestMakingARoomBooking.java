@@ -16,6 +16,7 @@ public class TestMakingARoomBooking {
 
     @Test
     public void standardFlowTest(){
+
         final String date = generateRandomDate();
         session.driver.findElement(By.className("dateselector")).findElement(By.id("datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), date, Keys.ENTER);
 
