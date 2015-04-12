@@ -24,22 +24,23 @@ public class TestModifyRoomBooking {
         session.driver.findElement(By.id("description")).sendKeys(name);
 
         session.driver.findElement(By.name("save_button")).click();
+
+    }
+
+    @After
+    public void deleteRoom(){
+        session.driver.findElement(By.className("dateselector")).findElement(By.id("datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), date, Keys.ENTER);
         List<WebElement> rooms = session.driver.findElements(By.xpath("//a[@title='"+name+"']"));
         for (WebElement e : rooms){
             if (e.isDisplayed())
                 e.click();
         }
-    }
-
-    @After
-    public void deleteRoom(){
         session.driver.findElement(By.id("view_entry_nav")).findElements(By.tagName("div")).get(1).findElement(By.tagName("a")).click();
         session.driver.switchTo().alert().accept();
     }
 
     @Test
     public void standardFlowTest(){
-
 
     }
 
