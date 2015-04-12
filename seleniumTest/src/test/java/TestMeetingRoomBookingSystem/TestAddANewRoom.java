@@ -70,7 +70,8 @@ public class TestAddANewRoom {
         driver.findElement(By.linkText("Rooms")).click();
 
         // 1b.1 The administrator enters an empty room name
-
+        driver.findElement(By.id("room_name")).clear();
+        
         // 1b.3 The administrator requests to create the room
         driver.findElement(By.xpath("//input[@value='Add Room']")).click();
 
