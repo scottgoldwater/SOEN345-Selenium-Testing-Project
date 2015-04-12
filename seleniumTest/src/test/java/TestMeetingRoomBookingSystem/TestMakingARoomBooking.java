@@ -46,8 +46,44 @@ public class TestMakingARoomBooking {
 
     }
 
+    /*
+    Please note we cannot test if the error message is present because it's a html5 feature that is not apparent on every version of browser. It's a feature of the browser and therefore not in the dom of the webpage.
+     */
     @Test
-    public void alternateFlowTest(){
+    public void alternateFlowOmitBriefDescriptionTest(){
+        final String date = generateRandomDate();
+        session.driver.findElement(By.className("dateselector")).findElement(By.id("datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), date, Keys.ENTER);
+
+        List<WebElement> columns = session.driver.findElement(By.xpath("/html/body/div[2]/table[1]/tbody")).findElements(By.tagName("tr"));
+        int selectedColumn = randInt(0, columns.size() - 1);
+        List<WebElement> rows = columns.get(selectedColumn).findElements(By.tagName("td"));
+        int selectedRow = randInt(1, rows.size() - 1);
+        rows.get(selectedRow).findElement(By.tagName("a")).click();
+        String before_url = session.driver.getCurrentUrl();
+        session.driver.findElement(By.name("save_button")).click();
+        Assert.assertEquals(before_url, session.driver.getCurrentUrl());
+    }
+
+    @Test
+    public void alternateFlowInvalidDateTest() throws InterruptedException {
+        final String date = generateRandomDate();
+        session.driver.findElement(By.className("dateselector")).findElement(By.id("datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), date, Keys.ENTER);
+
+        List<WebElement> columns = session.driver.findElement(By.xpath("/html/body/div[2]/table[1]/tbody")).findElements(By.tagName("tr"));
+        int selectedColumn = randInt(0, columns.size() - 1);
+        List<WebElement> rows = columns.get(selectedColumn).findElements(By.tagName("td"));
+        int selectedRow = randInt(1, rows.size() - 1);
+        rows.get(selectedRow).findElement(By.tagName("a")).click();
+
+        UUID nameID = UUID.randomUUID();
+
+        session.driver.findElement(By.id("name")).sendKeys(nameID.toString());
+        session.driver.findElement(By.id("end_datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), "01/01/2010");
+        session.driver.findElement(By.name("save_button")).click();
+        String alert_text = session.driver.switchTo().alert().getText();
+        session.driver.switchTo().alert().accept();
+        System.out.print(alert_text);
+        Assert.assertEquals(alert_text, "Error: the start day cannot be after the end day.");
 
     }
 
