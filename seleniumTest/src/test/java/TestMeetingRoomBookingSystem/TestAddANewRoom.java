@@ -13,16 +13,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class TestAddANewRoom {
 
-    private final String ROOMNAME = "Love Shack";
-    private final String DESCRIPTION = "Rock hard walls";
+    private String ROOMNAME;
+    private String DESCRIPTION;
     private final String CAPACITY = "2";
 
     @Rule
     public LogInRule session = new LogInRule("http://donatepls.com/mrbs-1.4.11/web/admin.php","admin","admin");
+
+    @Before
+    public void generateNewRoom(){
+        UUID name = UUID.randomUUID();
+        UUID des = UUID.randomUUID();
+        ROOMNAME = name.toString();
+        DESCRIPTION = des.toString();
+    }
 
     @Test
     public void testAddANewRoomStandardFlow() throws Exception{
