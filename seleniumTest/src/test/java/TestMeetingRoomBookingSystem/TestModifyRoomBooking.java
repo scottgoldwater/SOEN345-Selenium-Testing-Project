@@ -84,7 +84,7 @@ public class TestModifyRoomBooking {
         name = "Gandalf";
         description = "The Grey";
 
-        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL,"A"),name);
+        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL, "A"), name);
         session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.chord(Keys.CONTROL, "A"), description);
         session.driver.findElement(By.xpath("/html/body/div[2]/form/fieldset/fieldset/div[2]/input")).click();
 
@@ -104,6 +104,40 @@ public class TestModifyRoomBooking {
             if (e.isDisplayed())
                 e.click();
         }
+    }
+
+
+    @Test
+    public void altFlowRemovedDescriptionTest(){
+        selectBooking();
+
+        session.driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/a")).click();
+        name = "Gandalf";
+        description = "The Grey";
+
+        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL,"A"),Keys.DELETE);
+        session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.chord(Keys.CONTROL, "A"), description);
+
+        String before_url = session.driver.getCurrentUrl();
+        session.driver.findElement(By.xpath("/html/body/div[2]/form/fieldset/fieldset/div[2]/input")).click();
+        Assert.assertEquals(before_url, session.driver.getCurrentUrl());
+
+    }
+
+    @Test
+    public void altFlowInvalidDateTest(){
+        selectBooking();
+
+        session.driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/a")).click();
+        name = "Gandalf";
+        description = "The Grey";
+
+        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL,"A"),name);
+        session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"),Keys.chord(Keys.CONTROL, "A") , description);
+        session.driver.findElement(By.xpath("/html/body/div[2]/form/fieldset/fieldset/div[2]/input")).click();
+
+        selectBooking();
+
     }
 
 }
