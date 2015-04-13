@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import java.util.*;
 
 public class TestMakingARoomBooking {
-    @Rule public LogInRule session = new LogInRule();
+    @Rule public LogInRule session = new LogInRule("http://donatepls.com/mrbs-1.4.11/web/admin.php","rob","123");
 
 
     @Test

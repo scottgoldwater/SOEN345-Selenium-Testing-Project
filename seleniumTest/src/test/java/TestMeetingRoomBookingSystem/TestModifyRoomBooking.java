@@ -10,7 +10,7 @@ import java.util.*;
 
 public class TestModifyRoomBooking {
 
-    @Rule public LogInRule session = new LogInRule();
+    @Rule public LogInRule session = new LogInRule("http://donatepls.com/mrbs-1.4.11/web/admin.php","rob","123");
 
     private String date = "04/12/2010";
     private String xPath = "/html/body/div[2]/table[1]/tbody/tr[1]/td[2]/div/a";

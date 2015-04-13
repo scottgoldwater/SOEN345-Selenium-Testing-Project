@@ -10,9 +10,6 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by User on 4/12/2015.
- */
 public class TestCancellingARoomBooking {
     private final String baseURL = "http://donatepls.com/mrbs-1.4.11/web/";
     private final String dayURL = baseURL + "day.php?year=2015&month=4&day=10&area=1&room=4";
@@ -21,7 +18,7 @@ public class TestCancellingARoomBooking {
     private String name = "toDelete";
 
     @Rule
-    public LogInRule session = new LogInRule();
+    public LogInRule session = new LogInRule("http://donatepls.com/mrbs-1.4.11/web/admin.php","rob","123");
 
     @Before
     public void createRoom(){

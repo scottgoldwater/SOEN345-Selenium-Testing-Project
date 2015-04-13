@@ -11,10 +11,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class LogInRule implements TestRule{
-    private final String URL = "http://donatepls.com/mrbs-1.4.11/web/admin.php";
-    private final String USERNAME = "rob";
-    private final String PASSWORD = "123";
+    private final String URL;
+    private String USERNAME;
+    private String PASSWORD;
     public WebDriver driver;
+
+    public LogInRule(String url, String userName, String password){
+        URL = url;
+        USERNAME = userName;
+        PASSWORD = password;
+
+    }
 
 
     public Statement apply(final Statement statement, Description description) {
@@ -23,10 +30,7 @@ public class LogInRule implements TestRule{
             public void evaluate() throws Throwable {
                 driver = new FirefoxDriver();
                 driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
-                driver.navigate().to(URL);
-                driver.findElement(By.id("NewUserName")).sendKeys(USERNAME);
-                driver.findElement(By.id("NewUserPassword")).sendKeys(PASSWORD);
-                driver.findElement(By.id("NewUserPassword")).sendKeys(Keys.ENTER);
+                login();
                 try {
                     statement.evaluate();
                 } finally {
@@ -34,5 +38,21 @@ public class LogInRule implements TestRule{
                 }
             }
         };
+    }
+
+    public void setCredentials(String username, String password){
+        USERNAME = username;
+        PASSWORD = password;
+    }
+
+    public void login(){
+        driver.navigate().to(URL);
+        driver.findElement(By.id("NewUserName")).sendKeys(USERNAME);
+        driver.findElement(By.id("NewUserPassword")).sendKeys(PASSWORD);
+        driver.findElement(By.id("NewUserPassword")).sendKeys(Keys.ENTER);
+    }
+
+    public void logout(){
+        driver.findElement(By.xpath("/html/body/div[1]/table/tbody/tr/td[7]/div/form/div/input[5]")).click();
     }
 }
