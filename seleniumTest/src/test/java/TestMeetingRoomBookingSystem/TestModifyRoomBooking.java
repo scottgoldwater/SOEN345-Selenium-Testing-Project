@@ -65,10 +65,33 @@ public class TestModifyRoomBooking {
         gotoDate();
         selectBooking();
         session.driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/a")).click();
-        Assert.assertEquals(session.driver.findElement(By.xpath("/html/body/div[2]/h1")).getText(),"Access Denied");
+        Assert.assertEquals(session.driver.findElement(By.xpath("/html/body/div[2]/h1")).getText(), "Access Denied");
         session.logout();
         session.setCredentials("rob", "123");
         session.login();
+    }
+
+    @Test
+    public void altFlowOtherAdminTest(){
+        session.setCredentials("admin", "admin");
+        session.logout();
+        session.login();
+
+        gotoDate();
+        selectBooking();
+
+        session.driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/a")).click();
+        name = "Gandalf";
+        description = "The Grey";
+
+        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL,"A"),name);
+        session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.chord(Keys.CONTROL, "A"), description);
+        session.driver.findElement(By.xpath("/html/body/div[2]/form/fieldset/fieldset/div[2]/input")).click();
+
+        selectBooking();
+
+        Assert.assertEquals(session.driver.findElement(By.xpath("/html/body/div[2]/h3")).getText(), name);
+        Assert.assertEquals(session.driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr[1]/td[2]")).getText(), description);
     }
 
     public void gotoDate(){
