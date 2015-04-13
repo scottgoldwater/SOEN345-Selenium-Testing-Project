@@ -29,8 +29,8 @@ public class TestAddANewRoom {
     public void generateNewRoom(){
         UUID name = UUID.randomUUID();
         UUID des = UUID.randomUUID();
-        ROOMNAME = name.toString().substring(0,5);
-        DESCRIPTION = des.toString().substring(0,5);
+        ROOMNAME = name.toString().substring(0,24);
+        DESCRIPTION = des.toString().substring(0,24);
     }
 
     @Test
