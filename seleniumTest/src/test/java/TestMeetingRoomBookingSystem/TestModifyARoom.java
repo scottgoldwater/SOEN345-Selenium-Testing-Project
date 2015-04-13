@@ -27,6 +27,7 @@ public class TestModifyARoom {
     private final String MOD_DESCRIPTION = "The room was modified";
     private final String MOD_CAPACITY = "6";
     private final String MOD_EMAIL = "mod@hotmail.com";
+    private final String DUPLICATE_ROOM_NAME_ERROR = "This room name has already been used in the area!";
 
     @Before
     public void setUp() throws Exception {
@@ -40,15 +41,15 @@ public class TestModifyARoom {
 
         // Add the room to modify
         driver.findElement(By.linkText("Rooms")).click();
-        driver.findElement(By.id("room_name")).clear();
-        driver.findElement(By.id("room_name")).sendKeys(ROOMNAME);
-        driver.findElement(By.id("room_description")).clear();
-        driver.findElement(By.id("room_description")).sendKeys(DESCRIPTION);
-        driver.findElement(By.id("room_capacity")).clear();
-        driver.findElement(By.id("room_capacity")).sendKeys(CAPACITY);
-        driver.findElement(By.xpath("//input[@value='Add Room']")).click();
+        createRoom(ROOMNAME);
     }
 
+    @After
+    public void tearDown(){
+        // Delete second row where the added room is placed
+        deleteRoom(1);
+    }
+    
     @Test
     public void standardFlowTest(){
         // Keep track of the number of enabled rooms before the modification
@@ -81,10 +82,42 @@ public class TestModifyARoom {
         assertEquals(MOD_EMAIL, act_mod_email);
     }
 
-    @After
-    public void tearDown(){
+    @Test
+    public void testDuplicateName(){
+        // Create an extra room with the name that the room to modify's name tries to change to.
+        createRoom(MOD_ROOMNAME);
+        driver.findElement(By.xpath("//a[@title='" + ROOMNAME + "']")).click();
+
+        // Modify The room
+        driver.findElement(By.id("room_name")).clear();
+        driver.findElement(By.id("room_name")).sendKeys(MOD_ROOMNAME);
+        driver.findElements(By.name("room_disabled")).get(1).click(); // Click second radio button option
+        driver.findElement(By.id("description")).clear();
+        driver.findElement(By.id("description")).sendKeys(MOD_DESCRIPTION);
+        driver.findElement(By.id("capacity")).clear();
+        driver.findElement(By.id("capacity")).sendKeys(MOD_CAPACITY);
+        driver.findElement(By.id("room_admin_email")).clear();
+        driver.findElement(By.id("room_admin_email")).sendKeys(MOD_EMAIL);
+        driver.findElement(By.xpath("//input[@name='change_room']")).click();
+        WebElement errorSpan = driver.findElement(By.xpath("//form[@id='edit_room']/fieldset/fieldset[1]/span"));
+        assertEquals(DUPLICATE_ROOM_NAME_ERROR, errorSpan.getText());
+        driver.findElement(By.linkText("Rooms")).click();
+        deleteRoom(2);
+    }
+
+    private void createRoom(String roomName){
+        driver.findElement(By.id("room_name")).clear();
+        driver.findElement(By.id("room_name")).sendKeys(roomName);
+        driver.findElement(By.id("room_description")).clear();
+        driver.findElement(By.id("room_description")).sendKeys(DESCRIPTION);
+        driver.findElement(By.id("room_capacity")).clear();
+        driver.findElement(By.id("room_capacity")).sendKeys(CAPACITY);
+        driver.findElement(By.xpath("//input[@value='Add Room']")).click();
+    }
+
+    private void deleteRoom(int row){
         // Delete second row where the added room is placed
-        driver.findElements(By.xpath("//img[@alt='Delete']")).get(1).click();
+        driver.findElements(By.xpath("//img[@alt='Delete']")).get(row).click();
         driver.findElement(By.id("del_yes")).click();
     }
 
