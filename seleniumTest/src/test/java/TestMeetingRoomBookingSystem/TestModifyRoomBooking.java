@@ -125,15 +125,17 @@ public class TestModifyRoomBooking {
         selectBooking();
 
         session.driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/a")).click();
-        name = "Gandalf";
-        description = "The Grey";
 
-        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL,"A"),name);
-        session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"),Keys.chord(Keys.CONTROL, "A") , description);
+
+        session.driver.findElement(By.id("name")).sendKeys(Keys.chord(Keys.CONTROL, "A"), name);
+        session.driver.findElement(By.id("description")).sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.chord(Keys.CONTROL, "A"), description);
+
+
+        session.driver.findElement(By.id("end_datepicker")).sendKeys(Keys.chord(Keys.CONTROL, "A"), "01/01/2010");
         session.driver.findElement(By.xpath("/html/body/div[2]/form/fieldset/fieldset/div[2]/input")).click();
-
-        selectBooking();
-
+        String alert_text = session.driver.switchTo().alert().getText();
+        session.driver.switchTo().alert().accept();
+        Assert.assertEquals(alert_text, "Error: the start day cannot be after the end day.");
     }
 
 }
