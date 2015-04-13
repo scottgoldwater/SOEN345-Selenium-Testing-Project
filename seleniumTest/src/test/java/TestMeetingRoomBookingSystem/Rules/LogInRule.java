@@ -34,7 +34,7 @@ public class LogInRule implements TestRule{
                 try {
                     statement.evaluate();
                 } finally {
-                    //driver.close();
+                    driver.close();
                 }
             }
         };
